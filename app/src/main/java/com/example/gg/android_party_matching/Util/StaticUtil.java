@@ -15,6 +15,10 @@ public interface StaticUtil {
     public final static String dialog_positive = "예";
     public final static String dialog_negative ="아니요";
 
-    public final static String SignUp = "입력한 정보로 회원가입하시겠습니까?";
-    public final static String SignUpSuccess = "회원가입을 완료하였습니다!";
+    public final static String signUp = "입력한 정보로 회원가입하시겠습니까?";
+    public final static String signUpSuccess = "회원가입을 완료하였습니다!";
+
+    public final static String server_connection_error = "서버와 연결을 실패하였습니다";
+    public final static String user_widthdraw ="탈퇴 완료";
+    public final static String check_email_or_password="이메일이나 비밀번호를 확인해주세요.";
 }

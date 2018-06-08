@@ -15,6 +15,11 @@ import com.example.gg.android_party_matching.Fragment.BaseDialogFragment;
 import com.example.gg.android_party_matching.Listener.DialogListener;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
+import com.example.gg.android_party_matching.data.RetrofitAPI;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 액티비티와 다이얼로그 사이의 리스너를 인터페이스로 만들어서 데이터를 주고 받는 소스코드 참고 사이트
@@ -34,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String dialogMessage = "not set";
 
     private DialogListener listener;
+
+    boolean isSuccess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         BaseDialogFragment dialog = new BaseDialogFragment();
 
                         Bundle args = new Bundle();
-                        args.putString(DIALOG_MESSAGE, StaticUtil.SignUp);
+                        args.putString(DIALOG_MESSAGE, StaticUtil.signUp);
                         dialog.setArguments(args);
 
                         dialog.show(getSupportFragmentManager(), "Test");
@@ -125,20 +132,57 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onPositiveClicked(boolean positive) {
+        // 회원가입 여부에 확인을 누른 경우 SignUpActivity에서 처리
         if(positive){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(StaticUtil.SignUpSuccess)
-                    .setCancelable(false)
-                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
+            // 이메일 중복 여부 체크 후에 조인을 해야 한다.  URL : /member/email_check -> URL : /member/join
+
+            // 레트로핏 통신
+            Call<String> join = RetrofitAPI.getInstance().getMemberService().join(email, password, name);
+            // 통신 리턴
+            join.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    // 값 리턴 성공
+                    if(response.isSuccessful()){
+                        // 리턴값
+                        String result = response.body();
+                        if(result.equals("fail")){
+                            // 회원가입 실패
+                            Toast.makeText(SignUpActivity.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            // 회원가입 성공
+                            isSuccess = true;
                         }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
+
+                    }else{
+                        // 값 리턴 실패
+                        Toast.makeText(SignUpActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // 통신에러
+                    Toast.makeText(SignUpActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if(isSuccess){
+                // 회원가입 성공 창을 보여준다.
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(StaticUtil.signUpSuccess)
+                        .setCancelable(false)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
         }
     }
 

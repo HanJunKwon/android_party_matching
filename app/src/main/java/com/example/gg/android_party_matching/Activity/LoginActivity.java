@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gg.android_party_matching.Listener.DialogListener;
 import com.example.gg.android_party_matching.R;
@@ -68,12 +69,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         }else{
                             // 실패처리 로그인페이지 이동
+                            Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     // 통신오류처리
+                    Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -136,8 +139,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if(result.equals("delete")){
                             // 탈퇴
+                            Toast.makeText(LoginActivity.this, StaticUtil.user_widthdraw, Toast.LENGTH_SHORT).show();
                         }else if(result.equals("fail")){
                             // 아디 or 비번 틀림
+                            Toast.makeText(LoginActivity.this, StaticUtil.check_email_or_password, Toast.LENGTH_SHORT).show();
                         }else{
                             // 성공
                             // JWT 넣어줌
@@ -145,16 +150,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
 
                             // 메인으로 이동~~
-
+                            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
-
                     }else{
                         // 값 리턴 실패
+                        Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     // 통신에러
+                    Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                    return;
                 }
             });
 

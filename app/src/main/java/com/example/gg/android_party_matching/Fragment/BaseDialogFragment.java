@@ -39,7 +39,7 @@ public class BaseDialogFragment extends DialogFragment {
                 .setPositiveButton(StaticUtil.dialog_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(dialogMessage.equals(StaticUtil.SignUp)){
+                        if(dialogMessage.equals(StaticUtil.signUp)){
                             // 다이얼로그 리너스인터페이스의 메소드를 호출해 값을 SignUpActivity로 넘겨준다
                             listener = (DialogListener) getActivity();
                             listener.onPositiveClicked(true);
