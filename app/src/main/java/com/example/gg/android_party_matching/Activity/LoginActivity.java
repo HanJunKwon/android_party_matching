@@ -1,4 +1,4 @@
-package com.example.gg.android_party_matching;
+package com.example.gg.android_party_matching.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
