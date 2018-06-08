@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.gg.android_party_matching.Listener.DialogListener;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 

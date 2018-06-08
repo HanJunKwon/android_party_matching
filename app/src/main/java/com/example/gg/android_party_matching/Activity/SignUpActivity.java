@@ -1,6 +1,9 @@
 package com.example.gg.android_party_matching.Activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,19 +12,28 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gg.android_party_matching.Fragment.BaseDialogFragment;
+import com.example.gg.android_party_matching.Listener.DialogListener;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 
-import org.w3c.dom.Text;
+/**
+ * 액티비티와 다이얼로그 사이의 리스너를 인터페이스로 만들어서 데이터를 주고 받는 소스코드 참고 사이트
+ * http://liveonthekeyboard.tistory.com/143
+ * http://android-coding.blogspot.com/2012/07/dialogfragment-with-interface-to-pass.html
+ * https://bonoogi.postype.com/post/702
+ */
+
 
 // 회원가입 액티비티
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil, DialogListener {
     TextInputEditText edtName, edtEmail, edtPassword, edtConfirmPassword, edtKakaoTalkId;
     Button btnSignUp;
 
     String name, email, password, confirm_password, kakaoTalkId;
     public static final String DIALOG_MESSAGE ="dialogMessage";
     String dialogMessage = "not set";
+
+    private DialogListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,5 +123,27 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return isOverlap;
     }
 
+    @Override
+    public void onPositiveClicked(boolean positive) {
+        if(positive){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(StaticUtil.SignUpSuccess)
+                    .setCancelable(false)
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
 
+    @Override
+    public void onNegativeClicked() {
+
+    }
 }

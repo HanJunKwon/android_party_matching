@@ -1,18 +1,16 @@
 package com.example.gg.android_party_matching.Fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.example.gg.android_party_matching.Listener.DialogListener;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 
 public class BaseDialogFragment extends DialogFragment {
@@ -21,6 +19,10 @@ public class BaseDialogFragment extends DialogFragment {
      */
     public static final String DIALOG_MESSAGE ="dialogMessage";
     String dialogMessage = "not set";
+
+    // DialogListener 인터페이스를 멤버 변수로 선언해준다.
+    private DialogListener listener;
+
 
     @NonNull
     @Override
@@ -37,13 +39,17 @@ public class BaseDialogFragment extends DialogFragment {
                 .setPositiveButton(StaticUtil.dialog_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        if(dialogMessage.equals(StaticUtil.SignUp)){
+                            // 다이얼로그 리너스인터페이스의 메소드를 호출해 값을 SignUpActivity로 넘겨준다
+                            listener = (DialogListener) getActivity();
+                            listener.onPositiveClicked(true);
+                            dismiss();
+                        }
                     }
                 })
                 .setNegativeButton(StaticUtil.dialog_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
 

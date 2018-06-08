@@ -16,4 +16,5 @@ public interface StaticUtil {
     public final static String dialog_negative ="아니요";
 
     public final static String SignUp = "입력한 정보로 회원가입하시겠습니까?";
+    public final static String SignUpSuccess = "회원가입을 완료하였습니다!";
 }
