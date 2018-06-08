@@ -1,7 +1,8 @@
-package com.example.gg.android_party_matching;
+package com.example.gg.android_party_matching.member;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.gg.android_party_matching.CategoryActivity;
+import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
+import com.example.gg.android_party_matching.data.RetrofitAPI;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
     TextInputEditText edtEmail, edtPassword;
@@ -20,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     CheckBox chkAutoLogin;
 
     SharedPreferences shared;
+    SharedPreferences.Editor editor;
 
     String email = "", password = "";
     @Override
@@ -30,10 +39,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         // SharedPreference
-        shared = getSharedPreferences("login", MODE_PRIVATE);
+        // shared = getSharedPreferences("login", MODE_PRIVATE);
+        // default로 하는게 쓰기 편함
+        shared = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = shared.edit();
 
         // 자동 로그인 체크한 경우, 자동으로 로그인하게
-        boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
+        /*boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
         if(isAutoLogin){
             email = shared.getString(StaticUtil.user_email,"");
             password = shared.getString(StaticUtil.user_password, "");
@@ -43,6 +55,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 finish();
             }
+        }*/
+
+        // 자동 로그인 체크 하지 않아도 자동로그인 됨 or 자동 로그인 체크 방식으로 수정 하셔도 될거 같아요..
+        String jwt = shared.getString("jwt", null);
+        if(jwt != null){
+            Call<String> verify = RetrofitAPI.getInstance().getMemberService().verify(jwt);
+            verify.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.isSuccessful()){
+                        String result = response.body();
+                        if(result.equals("success")){
+                            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            // 실패처리 로그인페이지 이동
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // 통신오류처리
+                }
+            });
         }
 
         edtEmail = (TextInputEditText) findViewById(R.id.edtEmail);
@@ -90,27 +127,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             email = edtEmail.getText().toString();
             password = edtPassword.getText().toString();
 
-            // 로그인 성공
-            if(checkAuth(email, password)){
+            // 레트로핏 통신
+            Call<String> login = RetrofitAPI.getInstance().getMemberService().login(email, password);
+            // 통신 리턴
+            login.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    // 값 리턴 성공
+                    if(response.isSuccessful()){
+                        // 리턴값
+                        String result = response.body();
 
-                // 자동 로그인이 체크되어 있는 경우 SharedPreferences를 사용하여 자동로그인 여부, 이메일, 비밀번호 저장
-                boolean isAutoLogin = shared.getBoolean("isAutoLogin", false); // 두번째 인자는 기본값으로 isAutoLogin이라는게 Key가 존재하지 않다면 2번째 인자를 반환
-                if(isAutoLogin){
-                    // SharedPreferences 참고 사이트 :
-                    SharedPreferences.Editor editor = shared.edit();
-                    // 데이터 저장은 Key와 Value형태로 저장한다.
-                    editor.putString(StaticUtil.user_email, email); // 이메일 저장
-                    editor.putString(StaticUtil.user_password, password); // 비밀번호 저장
-                    editor.commit(); // 반드시 커밋해줘야 함
+                        if(result.equals("delete")){
+                            // 탈퇴
+                        }else if(result.equals("fail")){
+                            // 아디 or 비번 틀림
+                        }else{
+                            // 성공
+                            // JWT 넣어줌
+                            editor.putString("jwt", result);
+                            editor.commit();
+
+                            // 메인으로 이동~~
+
+                        }
+
+                    }else{
+                        // 값 리턴 실패
+                    }
                 }
-                intent = new Intent(LoginActivity.this, CategoryActivity.class);
-                startActivity(intent);
-                finish();
-            }
-            // 로그인 실패
-            else{
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    // 통신에러
+                }
+            });
 
-            }
         } else if(view == txtForgotPassword){
 
         } else if(view == txtSignUp){

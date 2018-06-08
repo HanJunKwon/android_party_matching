@@ -1,7 +1,9 @@
-package com.example.gg.android_party_matching;
+package com.example.gg.android_party_matching.member;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.gg.android_party_matching.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
