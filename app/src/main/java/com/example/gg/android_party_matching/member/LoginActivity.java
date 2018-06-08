@@ -1,7 +1,8 @@
-package com.example.gg.android_party_matching.Activity;
+package com.example.gg.android_party_matching.member;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.example.gg.android_party_matching.Listener.DialogListener;
+import com.example.gg.android_party_matching.CategoryActivity;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 import com.example.gg.android_party_matching.data.RetrofitAPI;
@@ -38,20 +39,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         // SharedPreference
-        shared = getSharedPreferences("login", MODE_PRIVATE);
+        // shared = getSharedPreferences("login", MODE_PRIVATE);
+        // default로 하는게 쓰기 편함
+        shared = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = shared.edit();
 
-//        // 자동 로그인 체크한 경우, 자동으로 로그인하게
-//        boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
-//        if(isAutoLogin){
-//            email = shared.getString(StaticUtil.user_email,"");
-//            password = shared.getString(StaticUtil.user_password, "");
-//            // 로그인 성공
-//            if(checkAuth(email, password)){
-//                Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }
+        // 자동 로그인 체크한 경우, 자동으로 로그인하게
+        /*boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
+        if(isAutoLogin){
+            email = shared.getString(StaticUtil.user_email,"");
+            password = shared.getString(StaticUtil.user_password, "");
+            // 로그인 성공
+            if(checkAuth(email, password)){
+                Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }*/
 
         // 자동 로그인 체크 하지 않아도 자동로그인 됨 or 자동 로그인 체크 방식으로 수정 하셔도 될거 같아요..
         String jwt = shared.getString("jwt", null);
@@ -162,7 +166,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         } else if(view == txtSignUp){
             intent = new Intent(LoginActivity.this, SignUpActivity.class);
-            startActivity(intent);
         }
     }
 

@@ -1,0 +1,29 @@
+[33mcommit 18be02da0fec3849158b39c2b5f0a8c1b3f8c6da[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: kwonhanJun <skclaqks11@naver.com>
+Date:   Fri Jun 8 18:10:39 2018 +0900
+
+    회원가입 다이얼로그 완료
+
+[33mcommit 1cb6733d3d489fbbc0228fbb68b933c60e3ef13d[m
+Author: kwonhanJun <skclaqks11@naver.com>
+Date:   Fri Jun 8 15:25:34 2018 +0900
+
+    dialogfragment 호출해서 띄우기 성공
+
+[33mcommit 35fc7af3cd5d59ba10cc42ea06db33e8fc88077b[m
+Author: kwonhanJun <skclaqks11@naver.com>
+Date:   Fri Jun 8 14:42:26 2018 +0900
+
+    회원가입 데이터 검증 구현, 기존 회원과 중복되는 회원정보는 서버와 연결해야 돼서 나중에 처리
+
+[33mcommit c9bd65578279bcddd8ef76c563c0c16ad6d8f527[m
+Author: kwonhanJun <skclaqks11@naver.com>
+Date:   Fri Jun 8 14:04:59 2018 +0900
+
+    액티비티 폴더 만들어서 별도로 관리
+
+[33mcommit ec43aac6e7366536529696d9d12a021fdbfcc84c[m
+Author: kwonhanJun <skclaqks11@naver.com>
+Date:   Thu Jun 7 21:23:43 2018 +0900
+
+    first commit
