@@ -5,6 +5,7 @@ import com.example.gg.android_party_matching.party.PartyService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitAPI {
 
@@ -16,6 +17,7 @@ public class RetrofitAPI {
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://www.keide.site/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

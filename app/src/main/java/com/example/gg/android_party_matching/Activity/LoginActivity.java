@@ -2,13 +2,18 @@ package com.example.gg.android_party_matching.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +22,7 @@ import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 import com.example.gg.android_party_matching.data.RetrofitAPI;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView txtForgotPassword, txtSignUp;
     Button btnLogin;
     CheckBox chkAutoLogin;
+    ProgressBar progressBar;
+
 
     SharedPreferences shared;
     SharedPreferences.Editor editor;
@@ -36,10 +44,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.GONE);
+
         getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         // SharedPreference
         shared = getSharedPreferences("login", MODE_PRIVATE);
+        editor = shared.edit();
+        // AsyncTask를 통해 HttpURLConnection 수행
 
 //        // 자동 로그인 체크한 경우, 자동으로 로그인하게
 //        boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
@@ -64,9 +78,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if(response.isSuccessful()){
                         String result = response.body();
                         if(result.equals("success")){
-                            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
-                            startActivity(intent);
-                            finish();
+                            // 로그인 로딩을 보여준다. 딜레이를 줘서 로딩 중이라는 화면을 보여주는 것이 좋다
+                            progressBar.setVisibility(View.VISIBLE);
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }, 1500);
+
                         }else{
                             // 실패처리 로그인페이지 이동
                             Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
@@ -169,6 +192,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             });
 
         } else if(view == txtForgotPassword){
+            Log.e("forgotPassword","log");
 
         } else if(view == txtSignUp){
             intent = new Intent(LoginActivity.this, SignUpActivity.class);
@@ -184,5 +208,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // 뷰단만 만들기 때문에 현재는 true 반환해서 액티비티 전환되는 것만 확인
         return true;
+    }
+
+    private class NetworkTask {
     }
 }
