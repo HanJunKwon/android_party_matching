@@ -11,4 +11,9 @@ public interface StaticUtil {
     public final static String user_password = "password";
     public final static String token = "token";
     public final static String isAutoLogin = "isAutoLogin";
+
+    public final static String dialog_positive = "예";
+    public final static String dialog_negative ="아니요";
+
+    public final static String SignUp = "입력한 정보로 회원가입하시겠습니까?";
 }

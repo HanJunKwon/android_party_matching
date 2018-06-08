@@ -8,17 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.gg.android_party_matching.Fragment.BaseDialogFragment;
 import com.example.gg.android_party_matching.R;
+import com.example.gg.android_party_matching.Util.StaticUtil;
 
 import org.w3c.dom.Text;
 
 // 회원가입 액티비티
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
     TextInputEditText edtName, edtEmail, edtPassword, edtConfirmPassword, edtKakaoTalkId;
     Button btnSignUp;
 
     String name, email, password, confirm_password, kakaoTalkId;
-
+    public static final String DIALOG_MESSAGE ="dialogMessage";
+    String dialogMessage = "not set";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     // DB의 member 테이블에서 유저 정보가 동일한 정보가 존재하는지 조회
                     if(chkOverlapMember()){
                         // 서버에 연결해서 회원가입 등록
-                        
+                        BaseDialogFragment dialog = new BaseDialogFragment();
+
+                        Bundle args = new Bundle();
+                        args.putString(DIALOG_MESSAGE, StaticUtil.SignUp);
+                        dialog.setArguments(args);
+
+                        dialog.show(getSupportFragmentManager(), "Test");
                     }
                 }
             }
@@ -81,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return isEmpty;
     }
 
+    // 비밀번호와 확인 비밀번호의 텍스트 값이 일치하는지 확인
     private boolean chkConfirmPassword() {
         // true : 값 일치
         boolean isSame = false;
@@ -91,10 +101,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return isSame;
     }
 
+    // 서버에 중복되는 email과 kakaoTalkID가 있는지 확인
     private boolean chkOverlapMember(){
         // false 중복
         boolean isOverlap = false;
         // 서버에서 email, kakaotalkid 를 가져와 중복되는 데이터가 있는 확인
+        // 중복되는 데이터가 없다면 true로 변경
+        isOverlap = !isOverlap;
         return isOverlap;
     }
+
+
 }

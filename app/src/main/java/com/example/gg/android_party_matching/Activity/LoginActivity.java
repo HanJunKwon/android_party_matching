@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         } else if(view == txtSignUp){
             intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         }
     }
 
