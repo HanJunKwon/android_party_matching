@@ -55,18 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor = shared.edit();
         // AsyncTask를 통해 HttpURLConnection 수행
 
-//        // 자동 로그인 체크한 경우, 자동으로 로그인하게
-//        boolean isAutoLogin = shared.getBoolean(StaticUtil.isAutoLogin, false);
-//        if(isAutoLogin){
-//            email = shared.getString(StaticUtil.user_email,"");
-//            password = shared.getString(StaticUtil.user_password, "");
-//            // 로그인 성공
-//            if(checkAuth(email, password)){
-//                Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        }
 
         // 자동 로그인 체크 하지 않아도 자동로그인 됨 or 자동 로그인 체크 방식으로 수정 하셔도 될거 같아요..
         String jwt = shared.getString("jwt", null);

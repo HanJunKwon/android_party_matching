@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private DialogListener listener;
 
-    boolean isSuccess;
+    public boolean isSuccess = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,22 +137,64 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(positive){
             // 이메일 중복 여부 체크 후에 조인을 해야 한다.  URL : /member/email_check -> URL : /member/join
 
+            // 이메일 중복 여부 체크하는 로직
             // 레트로핏 통신
-            Call<String> join = RetrofitAPI.getInstance().getMemberService().join(email, password, name);
+            Call<String> email_check = RetrofitAPI.getInstance().getMemberService().email_check(email);
             // 통신 리턴
-            join.enqueue(new Callback<String>() {
+            email_check.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     // 값 리턴 성공
                     if(response.isSuccessful()){
                         // 리턴값
                         String result = response.body();
-                        if(result.equals("fail")){
-                            // 회원가입 실패
-                            Toast.makeText(SignUpActivity.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        if(result.equals("0")){
+                            // 중복되는 이메일 존재
+                            Toast.makeText(SignUpActivity.this, StaticUtil.email_overlap, Toast.LENGTH_SHORT).show();
                         }else{
-                            // 회원가입 성공
-                            isSuccess = true;
+                            // 중복되는 이메일이 존재하지 않음
+                            // 회원가입하는 로직
+                            // 레트로핏 통신
+                            Call<String> join = RetrofitAPI.getInstance().getMemberService().join(email, password, name);
+                            // 통신 리턴
+                            join.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    // 값 리턴 성공
+                                    if(response.isSuccessful()){
+                                        // 리턴값
+                                        String result = response.body();
+                                        if(result.equals("fail")){
+                                            // 회원가입 실패
+                                            Toast.makeText(SignUpActivity.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                        }else{
+//                            //회원가입 성공
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                                            builder.setMessage(StaticUtil.signUpSuccess)
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    });
+                                            AlertDialog alert = builder.create();
+                                            alert.show();
+                                        }
+
+                                    }else{
+                                        // 값 리턴 실패
+                                        Toast.makeText(SignUpActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    // 통신에러
+                                    Toast.makeText(SignUpActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                     }else{
@@ -166,23 +209,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
-            if(isSuccess){
-                // 회원가입 성공 창을 보여준다.
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(StaticUtil.signUpSuccess)
-                        .setCancelable(false)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
 
-            }
+
         }
     }
 
