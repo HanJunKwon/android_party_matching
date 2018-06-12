@@ -30,9 +30,11 @@ public class CategoryActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        // 리사이클러 뷰의 어댑터를 설정
         mAdapter = new RecyclerViewAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
+        // GPS 생성
         GpsInfo gpsInfo = new GpsInfo(this);
         gpsInfo.showSettingsAlert();
     }

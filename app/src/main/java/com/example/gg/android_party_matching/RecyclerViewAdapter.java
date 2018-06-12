@@ -9,11 +9,13 @@ import android.widget.Button;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     String data[];
+    // itemView의 컴포넌트들에 대한 설정은 ViewHolder에서 한다. (ex. Button 클릭 이벤트)
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public Button btnMenu;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            // onCreateViewHolder에서 만든 itemView 안에 있는 컴포넌트들을 설정한다.
             btnMenu = (Button) itemView.findViewById(R.id.btnMenu);
         }
     }
@@ -28,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // 리사이클러 뷰에 들어가는 item에 대한 뷰를 생성한다
+        // 리사이클러 뷰 1줄에 들어가는 뷰(item)를 가져와서 itemView 변수에 저장
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
 
         ViewHolder vh = new ViewHolder(itemView);
