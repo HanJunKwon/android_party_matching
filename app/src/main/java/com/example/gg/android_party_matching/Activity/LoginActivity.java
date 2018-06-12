@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +29,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
+    RelativeLayout relativeLayout1, relativeLayout2;
     TextInputEditText edtEmail, edtPassword;
-    TextView txtForgotPassword, txtSignUp;
+    TextView txtForgotPassword, txtSignUp, txtLoading;
     Button btnLogin;
-    CheckBox chkAutoLogin;
     ProgressBar progressBar;
+
 
 
     SharedPreferences shared;
@@ -44,9 +46,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        relativeLayout1 = (RelativeLayout) findViewById(R.id.RelativeLayout1);
+        relativeLayout2 = (RelativeLayout) findViewById(R.id.RelativeLayout2);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), android.graphics.PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.GONE);
+        txtLoading = (TextView) findViewById(R.id.txtLoading);
+        txtLoading.setVisibility(View.GONE);
 
         getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
@@ -66,8 +73,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if(response.isSuccessful()){
                         String result = response.body();
                         if(result.equals("success")){
+                            // 로딩 아이콘만 보여준다.
+                            relativeLayout1.setVisibility(View.GONE);
+                            relativeLayout2.setVisibility(View.GONE);
+
                             // 로그인 로딩을 보여준다. 딜레이를 줘서 로딩 중이라는 화면을 보여주는 것이 좋다
                             progressBar.setVisibility(View.VISIBLE);
+                            txtLoading.setVisibility(View.VISIBLE);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -107,30 +119,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtSignUp = (TextView) findViewById(R.id.txtSignUp);
         txtSignUp.setOnClickListener(this);
 
-        // 자동 로그인 설정
-        chkAutoLogin = (CheckBox)findViewById(R.id.chkAutoLogin);
-        chkAutoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                SharedPreferences.Editor editor = shared.edit();
-                if(isChecked){
 
-                    // 체크한 경우 자동 로그인 true
-                    editor.putBoolean(StaticUtil.isAutoLogin, true);
-                }else{
-                    // 체크 해제한 경우 자동 로그인 false
-                    editor.putBoolean(StaticUtil.isAutoLogin, false);
-                    // 체크 해제있으니까 email이랑 password와 관련된 정보 삭제
-                    editor.remove(StaticUtil.user_email);
-                    editor.remove(StaticUtil.user_password);
-                }
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         Intent intent;
+        intent = new Intent(LoginActivity.this, CategoryActivity.class);
+        startActivity(intent);
+        finish();
 
         if(view == btnLogin){
             // 이메일과 패스워드 값을 가져온다.
@@ -156,14 +153,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, StaticUtil.check_email_or_password, Toast.LENGTH_SHORT).show();
                         }else{
                             // 성공
+                            // 로딩 아이콘만 보여준다.
+                            relativeLayout1.setVisibility(View.GONE);
+                            relativeLayout2.setVisibility(View.GONE);
+
+                            // 로그인 로딩을 보여준다. 딜레이를 줘서 로딩 중이라는 화면을 보여주는 것이 좋다
+                            progressBar.setVisibility(View.VISIBLE);
+                            txtLoading.setVisibility(View.VISIBLE);
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }, 1500);
+
                             // JWT 넣어줌
                             editor.putString("jwt", result);
                             editor.commit();
-
-                            // 메인으로 이동~~
-                            Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
-                            startActivity(intent);
-                            finish();
                         }
                     }else{
                         // 값 리턴 실패

@@ -52,6 +52,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/RelativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/RelativeLayout1">
@@ -60,12 +61,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/chkAutoLogin"
+            <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="@string/auto_login" />
+                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/txtForgotPassword"
@@ -105,6 +104,14 @@
                 android:layout_height="100dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/txtLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBar"
+                android:layout_centerHorizontal="true"
+                android:text="@string/loading" />
         </RelativeLayout>
     </LinearLayout>
 

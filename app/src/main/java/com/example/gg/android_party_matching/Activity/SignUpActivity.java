@@ -153,6 +153,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(SignUpActivity.this, StaticUtil.email_overlap, Toast.LENGTH_SHORT).show();
                         }else{
                             // 중복되는 이메일이 존재하지 않음
+
                             // 회원가입하는 로직
                             // 레트로핏 통신
                             Call<String> join = RetrofitAPI.getInstance().getMemberService().join(email, password, name);
@@ -168,7 +169,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                             // 회원가입 실패
                                             Toast.makeText(SignUpActivity.this, "회원가입을 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                         }else{
-//                            //회원가입 성공
+                                            //회원가입 성공
                                             AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                                             builder.setMessage(StaticUtil.signUpSuccess)
                                                     .setCancelable(false)

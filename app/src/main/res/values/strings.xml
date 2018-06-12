@@ -6,10 +6,11 @@
     <string name="login">Login</string>
     <string name="forgot_password">Forgot password</string>
     <string name="sign_up">Sign up</string>
-    <string name="auto_login">자동 로그인</string>
 
     <string name="user_name">Name</string>
     <string name="kakaotalk_id">KakaoTalk ID</string>
+
+    <string name="loading">서버에 접속 중입니다.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
