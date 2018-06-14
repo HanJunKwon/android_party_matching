@@ -24,4 +24,7 @@ public interface StaticUtil {
     public final static String email_overlap = "중복되는 이메일이 존재합니다";
     public final static String loading = "서버에 접속 중입니다.";
 
+    public final static String meal = "식사";
+    public final static String pc_room = "PC방";
+
 }

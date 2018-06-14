@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.CategoryActivity" />
-        <activity android:name=".Activity.SignUpActivity"></activity>
+        <activity android:name=".Activity.SignUpActivity" />
+        <activity android:name=".Activity.BoardActivity"></activity>
     </application>
 
 </manifest>
