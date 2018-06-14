@@ -1,4 +1,4 @@
-package com.example.gg.android_party_matching;
+package com.example.gg.android_party_matching.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.gg.android_party_matching.Activity.BoardActivity;
+import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements StaticUtil {
