@@ -17,6 +17,8 @@ public interface StaticUtil {
 
     public final static String signUp = "입력한 정보로 회원가입하시겠습니까?";
     public final static String signUpSuccess = "회원가입을 완료하였습니다!";
+    public final static String group_join = "해당 그룹에 참여 하시겠습니까?";
+    public final static String group_join_success = "그룹참여 신청을 하였습니다. \n작성자가 승인 시 자동으로 그룹 참여가 됩니다.";
 
     public final static String server_connection_error = "서버와 연결을 실패하였습니다";
     public final static String user_widthdraw ="탈퇴 완료";
@@ -26,5 +28,4 @@ public interface StaticUtil {
 
     public final static String meal = "식사";
     public final static String pc_room = "PC방";
-
 }
