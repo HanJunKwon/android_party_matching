@@ -1,6 +1,7 @@
 package com.example.gg.android_party_matching.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,17 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.gg.android_party_matching.Activity.BoardContentActivity;
+import com.example.gg.android_party_matching.Activity.BoardTabActivity;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.member.BoardVO;
 
 import java.util.ArrayList;
 
 public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHolder> {
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    Context context;
+    public  class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtRegisterDate, txtTitle, txtParticipantCount, txtRegistrant;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context = itemView.getContext();
+                    Intent intent = new Intent(context, BoardContentActivity.class);
+                    context.startActivity(intent);
+                }
+            });
             txtRegisterDate = (TextView) itemView.findViewById(R.id.txtRegisterDate);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
             txtParticipantCount = (TextView) itemView.findViewById(R.id.txtParticipantCount);
@@ -29,8 +41,9 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
     // 후에 BoardVO객체를 생성하여 생성자 호출 시 바인딩
     ArrayList<BoardVO> party_list = new ArrayList<BoardVO>();
 
-    public BoardRVAdapter(){
+    public BoardRVAdapter(Context context){
         //
+        this.context = context;
         BoardVO b1 = new BoardVO("2018년 6월 13일", "배틀그라운드 스쿼드 구함", 4, 2, "skclaqks11");
         BoardVO b2 = new BoardVO("2018년 6월 12일", "아이온 보스 레이드", 4, 2, "dkdlel1019");
 

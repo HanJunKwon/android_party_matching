@@ -28,7 +28,7 @@ public class BoardListFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // 리사이클러 뷰의 어댑터를 설정
-        mAdapter = new BoardRVAdapter();
+        mAdapter = new BoardRVAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         return view;

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.gg.android_party_matching.Activity.BoardActivity;
+import com.example.gg.android_party_matching.Activity.BoardTabActivity;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
 
@@ -29,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             btnMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, BoardActivity.class);
+                    Intent intent = new Intent(context, BoardTabActivity.class);
                     int category = -1;
                     switch (getAdapterPosition()){
                         case 0:
