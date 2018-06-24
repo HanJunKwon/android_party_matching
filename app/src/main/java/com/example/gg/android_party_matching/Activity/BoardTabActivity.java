@@ -1,5 +1,6 @@
 package com.example.gg.android_party_matching.Activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import com.example.gg.android_party_matching.TabPagerAdapter;
 public class BoardTabActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager vpBoard;
+    FloatingActionButton fabtnBoardAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

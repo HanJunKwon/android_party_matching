@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.StaticUtil;
+import com.example.gg.android_party_matching.member.BoardVO;
 
 public class BoardContentActivity extends AppCompatActivity implements View.OnClickListener, StaticUtil {
     TextView txtTitle, txtContent, txtTime, txtPlace, txtRegistrant;
@@ -20,6 +21,7 @@ public class BoardContentActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //BoardVO board = new BoardVO();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_content);
 
@@ -69,7 +71,9 @@ public class BoardContentActivity extends AppCompatActivity implements View.OnCl
                 alert.show();
                 break;
             case R.id.btnGroupMemberLocation:
-
+                // 나중에는 어떤 게시글 번호에 참여한 그룹을 보여줄 지 정해서 보여줘야하기 때문에 게시글 번호를 다음 인텐트로 전달해주도록 수정 할 것
+                Intent intent = new Intent(BoardContentActivity.this, GroupMemberLocationActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return;
