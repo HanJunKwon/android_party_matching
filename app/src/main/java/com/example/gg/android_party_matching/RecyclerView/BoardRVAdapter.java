@@ -67,7 +67,7 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
         holder.txtTitle.setText(board.getTitle());
         String max = Integer.toString(board.getMax_participant());
         String now = Integer.toString(board.getNow_participant());
-        holder.txtParticipantCount.setText(holder.txtParticipantCount.getText() + max + "/" + now);
+        holder.txtParticipantCount.setText(holder.txtParticipantCount.getText() + now + "/" + max);
         holder.txtRegistrant.setText(holder.txtRegistrant.getText() + board.getRegistrant());
     }
 
