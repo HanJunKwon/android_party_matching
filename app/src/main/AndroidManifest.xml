@@ -24,7 +24,8 @@
         <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.BoardTabActivity" />
         <activity android:name=".Activity.BoardContentActivity" />
-        <activity android:name=".Activity.GroupMemberLocationActivity"></activity>
+        <activity android:name=".Activity.GroupMemberLocationActivity" />
+        <activity android:name=".Activity.BoardCreateActivity"></activity>
     </application>
 
 </manifest>
