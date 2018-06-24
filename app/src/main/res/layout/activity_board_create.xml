@@ -29,26 +29,24 @@
         android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:text="모임날짜" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="5dp">
 
         <Spinner
             android:id="@+id/spYear"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:entries="@array/sp_year_item"
             android:verticalScrollbarPosition="right"
-            android:dropDownWidth="match_parent"/>
+            android:dropDownWidth="100dp"/>
 
         <TextView
             android:id="@+id/textView4"
@@ -58,13 +56,12 @@
 
         <Spinner
             android:id="@+id/spMonth"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:entries="@array/sp_month_item"
             android:verticalScrollbarPosition="right"
-            android:dropDownWidth="match_parent"/>
+            android:dropDownWidth="100dp"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -74,13 +71,12 @@
 
         <Spinner
             android:id="@+id/spDay"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:entries="@array/sp_day_item"
             android:verticalScrollbarPosition="right"
-            android:dropDownWidth="match_parent"/>
+            android:dropDownWidth="100dp"/>
 
         <TextView
             android:id="@+id/textView6"
@@ -89,9 +85,48 @@
             android:text="일" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="모임시간"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <Spinner
+            android:id="@+id/spHour"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:dropDownWidth="100dp"/>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시" />
+
+        <Spinner
+            android:id="@+id/spMinute"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:dropDownWidth="100dp"/>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분" />
+    </LinearLayout>
+
 
 </LinearLayout>
