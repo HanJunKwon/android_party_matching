@@ -21,4 +21,8 @@
     <string name="registrant">작성자</string>
     <string name="group_join">참가신청</string>
 
+    <string name="sp_year">연도</string>
+    <string name="sp_month">월</string>
+    <string name="sp_day">일</string>
+
 </resources>
