@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.TabPagerAdapter;
+import com.example.gg.android_party_matching.Util.GpsInfo;
 
 public class BoardTabActivity extends AppCompatActivity {
     TabLayout tabLayout;
@@ -18,6 +19,7 @@ public class BoardTabActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_tab);
+        getSupportActionBar().setTitle("소모임"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         vpBoard = (ViewPager) findViewById(R.id.vpBoard);
@@ -43,5 +45,8 @@ public class BoardTabActivity extends AppCompatActivity {
             }
         });
 
+        // GPS 생성
+        GpsInfo gpsInfo = new GpsInfo(this);
+        gpsInfo.showSettingsAlert();
     }
 }

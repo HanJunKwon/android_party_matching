@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         relativeLayout1 = (RelativeLayout) findViewById(R.id.RelativeLayout1);
         relativeLayout2 = (RelativeLayout) findViewById(R.id.RelativeLayout2);
@@ -54,8 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.GONE);
         txtLoading = (TextView) findViewById(R.id.txtLoading);
         txtLoading.setVisibility(View.GONE);
-
-        getSupportActionBar().setTitle("로그인"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         // SharedPreference
         shared = getSharedPreferences("login", MODE_PRIVATE);
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, BoardTabActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -124,10 +123,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Intent intent;
-        intent = new Intent(LoginActivity.this, CategoryActivity.class);
-        startActivity(intent);
-        finish();
+//        Intent intent;
+//        intent = new Intent(LoginActivity.this, BoardTabActivity.class);
+//        startActivity(intent);
+//        finish();
 
         if(view == btnLogin){
             // 이메일과 패스워드 값을 가져온다.
@@ -164,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, BoardTabActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -192,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.e("forgotPassword","log");
 
         } else if(view == txtSignUp){
-            intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
     }

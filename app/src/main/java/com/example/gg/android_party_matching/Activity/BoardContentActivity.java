@@ -24,6 +24,7 @@ public class BoardContentActivity extends AppCompatActivity implements View.OnCl
         //BoardVO board = new BoardVO();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_content);
+        getSupportActionBar().setTitle("모임 내용"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtContent = (TextView) findViewById(R.id.txtContent);

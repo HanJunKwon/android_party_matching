@@ -46,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        getSupportActionBar().setTitle("회원가입"); // 타이틀바의 내용 변경(모든 버전에서 사용 가능)
 
         edtName = (TextInputEditText) findViewById(R.id.edtName);
         edtEmail = (TextInputEditText) findViewById(R.id.edtEmail);
