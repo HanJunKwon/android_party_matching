@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btnLogin;
     ProgressBar progressBar;
 
-
-
     SharedPreferences shared;
     SharedPreferences.Editor editor;
 

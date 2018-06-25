@@ -37,6 +37,7 @@
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="@string/password" />
     </android.support.design.widget.TextInputLayout>
 
@@ -48,6 +49,7 @@
             android:id="@+id/edtConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="@string/confirm_password" />
     </android.support.design.widget.TextInputLayout>
 
