@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BoardCreateActivity extends AppCompatActivity {
-    private Spinner mSpinnerYear, mSpinnerMonth, mSpinnerDay, mSpinnerHour, mSpinnerMinute;
+    private Spinner mSpinnerYear, mSpinnerMonth, mSpinnerDay, mSpinnerHour, mSpinnerMinute, mSpinnerMaxPeople;
     EditText edtTitle, edtContent;
     Button btnBoardRegistration;
     private String[] year=new String[2];
@@ -32,8 +32,9 @@ public class BoardCreateActivity extends AppCompatActivity {
     private String[] hour = new String[24];
     private String[] minute = new String[60];
 
-    private String title, content, party_date; // 제목, 내용, 파티하는 날짜
-    private int max_people; // 최대인원
+    private String[] maxPeople = new String[6];
+
+    private String title, content, party_date, s_year, s_month, s_day, s_hour, s_minute, s_maxPeople, s_latitude, s_longiteu; // 제목, 내용, 파티하는 날짜
 
     SharedPreferences shared;
     SharedPreferences.Editor editor;
@@ -42,6 +43,17 @@ public class BoardCreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_create);
+
+        edtTitle = (EditText) findViewById(R.id.edtTitle);
+        edtContent = (EditText) findViewById(R.id.edtContent);
+        mSpinnerYear = (Spinner) findViewById(R.id.spYear);
+        mSpinnerMonth = (Spinner) findViewById(R.id.spMonth);
+        mSpinnerDay = (Spinner) findViewById(R.id.spDay);
+        mSpinnerHour = (Spinner) findViewById(R.id.spHour);
+        mSpinnerMinute = (Spinner) findViewById(R.id.spMinute);
+        mSpinnerMaxPeople = (Spinner) findViewById(R.id.spMaxPeople);
+        btnBoardRegistration = (Button) findViewById(R.id.btnBoardRegistration);
+
 
         year[0] = "2018";
         year[1] = "2019";
@@ -62,20 +74,18 @@ public class BoardCreateActivity extends AppCompatActivity {
             minute[i] = Integer.toString(i);
         }
 
-        mSpinnerYear = (Spinner) findViewById(R.id.spYear);
-        mSpinnerMonth = (Spinner) findViewById(R.id.spMonth);
-        mSpinnerDay = (Spinner) findViewById(R.id.spDay);
-        mSpinnerHour = (Spinner) findViewById(R.id.spHour);
-        mSpinnerMinute = (Spinner) findViewById(R.id.spMinute);
-        btnBoardRegistration = (Button) findViewById(R.id.btnBoardRegistration);
+        for(int i=0; i<maxPeople.length; ++i){
+            maxPeople[i] = Integer.toString(i+1);
+        }
 
+        // 연도 스피너
         ArrayAdapter spinnerYearAdapter;
         spinnerYearAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, year);
         mSpinnerYear.setAdapter(spinnerYearAdapter);
         mSpinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                s_year = (String)mSpinnerYear.getSelectedItem();
             }
 
             @Override
@@ -84,13 +94,14 @@ public class BoardCreateActivity extends AppCompatActivity {
             }
         });
 
+        // 월 스피너
         ArrayAdapter spinnerMonthAdapter;
         spinnerMonthAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, month);
         mSpinnerMonth.setAdapter(spinnerMonthAdapter);
         mSpinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                s_month = (String)mSpinnerMonth.getSelectedItem();
             }
 
             @Override
@@ -99,14 +110,14 @@ public class BoardCreateActivity extends AppCompatActivity {
             }
         });
 
-
+        // 일자 선택
         ArrayAdapter spinnerDayAdapter;
         spinnerDayAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, day);
         mSpinnerDay.setAdapter(spinnerDayAdapter);
         mSpinnerDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                s_day = (String)mSpinnerDay.getSelectedItem();
             }
 
             @Override
@@ -115,13 +126,14 @@ public class BoardCreateActivity extends AppCompatActivity {
             }
         });
 
+        // 시간 선택
         ArrayAdapter spinnerHourAdapter;
         spinnerHourAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, hour);
         mSpinnerHour.setAdapter(spinnerHourAdapter);
         mSpinnerHour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                s_hour = (String)mSpinnerHour.getSelectedItem();
             }
 
             @Override
@@ -130,13 +142,30 @@ public class BoardCreateActivity extends AppCompatActivity {
             }
         });
 
+        // 분 선택
         ArrayAdapter spinnerMinuteAdapter;
         spinnerMinuteAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, minute);
         mSpinnerMinute.setAdapter(spinnerMinuteAdapter);
         mSpinnerMinute.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                s_minute = (String)mSpinnerMinute.getSelectedItem();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        // 최대 인원 스피너
+        ArrayAdapter spinnerMaxPeopleAdapter;
+        spinnerMaxPeopleAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, maxPeople);
+        mSpinnerMaxPeople.setAdapter(spinnerMaxPeopleAdapter);
+        mSpinnerMaxPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                s_maxPeople = (String)mSpinnerMaxPeople.getSelectedItem();
             }
 
             @Override
@@ -150,7 +179,6 @@ public class BoardCreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 title = edtTitle.getText().toString();
                 content = edtContent.getText().toString();
-
                 // 제목 미입력
                 if(title.isEmpty()){
                     Toast.makeText(BoardCreateActivity.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -161,13 +189,17 @@ public class BoardCreateActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 // SharedPreference
                 shared = getSharedPreferences("login", MODE_PRIVATE);
                 editor = shared.edit();
 
                 String jwt = shared.getString("jwt", null);
+
+                party_date = s_year + "-" + s_month + "-" + s_day + " " + s_hour + ":" + s_minute;
+
                 // 레트로핏 통신
-                Call<String> login = RetrofitAPI.getInstance().getPartyService().make(1, jwt, title, content, "4", "2018-06-25 12:33", "37.4480158", "126.6553101");
+                Call<String> login = RetrofitAPI.getInstance().getPartyService().make(1, jwt, title, content, s_maxPeople, party_date, "37.4480158", "126.6553101");
                 login.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
