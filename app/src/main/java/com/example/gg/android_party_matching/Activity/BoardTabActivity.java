@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.TabPagerAdapter;
@@ -13,6 +14,7 @@ import com.example.gg.android_party_matching.Util.GpsInfo;
 public class BoardTabActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager vpBoard;
+    long pressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +49,24 @@ public class BoardTabActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(pressedTime == 0){
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            pressedTime = System.currentTimeMillis();
+        }
+        else{
+            int second = (int) (System.currentTimeMillis() - pressedTime);
+            if(second > 2000){
+                Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                pressedTime = 0;
+            }
+            else{
+                super.onBackPressed();
+                finish();
+            }
+        }
     }
 }

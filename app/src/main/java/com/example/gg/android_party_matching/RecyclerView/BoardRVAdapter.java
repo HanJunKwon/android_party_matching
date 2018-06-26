@@ -56,18 +56,8 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
         call_list.enqueue(new Callback<List<PartyVO>>() {
             @Override
             public void onResponse(Call<List<PartyVO>> call, Response<List<PartyVO>> response) {
-                party_list = response.body();
-                    for(PartyVO partyVO: party_list){
-
-                }
-//                if(response.isSuccessful()){
-//                    for(PartyVO party: response.body()){
-//                        party_list.add(party);
-//                    }
-//                }else{
-//                    // 실패 시 처리
-//                    System.out.print("error");
-//                }
+                if(response.isSuccessful())
+                    party_list = response.body();
             }
 
             @Override
@@ -75,12 +65,6 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
                 Log.d("BoardRVAdapter error", ""+call);
             }
         });
-
-//        BoardVO b1 = new BoardVO("2018년 6월 13일", "배틀그라운드 스쿼드 구함", 4, 2, "skclaqks11");
-//        BoardVO b2 = new BoardVO("2018년 6월 12일", "아이온 보스 레이드", 4, 2, "dkdlel1019");
-//
-//        party_list.add(b1);
-//        party_list.add(b2);
     }
 
     @NonNull
