@@ -39,6 +39,7 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
                     context.startActivity(intent);
                 }
             });
+            Log.e("", "ViewHolder생성자");
             txtRegisterDate = (TextView) itemView.findViewById(R.id.txtRegisterDate);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
             txtParticipantCount = (TextView) itemView.findViewById(R.id.txtParticipantCount);
@@ -56,8 +57,10 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
         call_list.enqueue(new Callback<List<PartyVO>>() {
             @Override
             public void onResponse(Call<List<PartyVO>> call, Response<List<PartyVO>> response) {
-                if(response.isSuccessful())
+                if(response.isSuccessful()) {
                     party_list = response.body();
+                    Log.e("","데이터 받아옴");
+                }
             }
 
             @Override
@@ -73,6 +76,7 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.board_list_item, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(v);
+        Log.e("","onCreateViewHolder");
         return viewHolder;
     }
 
@@ -85,6 +89,7 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
         String now = Integer.toString(partyVO.getJoin_people());
         holder.txtParticipantCount.setText("참가자 " + now + "/" + max);
         holder.txtRegistrant.setText("작성자: " + partyVO.getMaster_name());
+        Log.e("","onBindViewHolder");
     }
 
     @Override

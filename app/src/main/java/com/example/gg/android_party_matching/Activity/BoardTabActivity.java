@@ -29,6 +29,10 @@ public class BoardTabActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         vpBoard = (ViewPager) findViewById(R.id.vpBoard);
 
+        tabLayout.addTab(tabLayout.newTab().setText("게시글"));
+        tabLayout.addTab(tabLayout.newTab().setText("날씨"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
         TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         vpBoard.setAdapter(pagerAdapter);
         vpBoard.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

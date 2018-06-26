@@ -52,7 +52,9 @@ public class BoardListFragment extends Fragment implements View.OnClickListener,
 
         // 리사이클러 뷰의 어댑터를 설정
         mAdapter = new BoardRVAdapter(getActivity(), latitude, longitude);
+        mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabtnBoardAdd);
         floatingActionButton.setOnClickListener(this);
