@@ -18,6 +18,8 @@ android {
     }
 }
 
+apply plugin: 'com.android.application'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -27,6 +29,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     // textinputlayout 및 기타 머터리얼 디자인을 사용하기 위한 라이브러리
     implementation 'com.android.support:design:27.1.1'
 

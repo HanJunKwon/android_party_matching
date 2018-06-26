@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     finish();
                                 }
                             }, 1500);
-
+                            editor.commit();
                         }else{
                             // 실패처리 로그인페이지 이동
                             Toast.makeText(LoginActivity.this, StaticUtil.server_connection_error, Toast.LENGTH_SHORT).show();

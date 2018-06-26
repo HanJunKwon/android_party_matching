@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +18,12 @@ import com.example.gg.android_party_matching.RecyclerView.BoardRVAdapter;
 import com.example.gg.android_party_matching.R;
 import com.example.gg.android_party_matching.Util.GpsInfo;
 
-public class BoardListFragment extends Fragment implements View.OnClickListener {
+public class BoardListFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton floatingActionButton;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     //private GpsInfo gpsInfo;
     private String latitude, longitude;
@@ -41,6 +43,7 @@ public class BoardListFragment extends Fragment implements View.OnClickListener 
         // BoardTabActivity에서 부터 전달된 위도 경도 값
 //        latitude = getArguments().getString("latitude");
 //        longitude = getArguments().getString("longitude");
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewBoard);
         mRecyclerView.setHasFixedSize(true);
@@ -53,6 +56,8 @@ public class BoardListFragment extends Fragment implements View.OnClickListener 
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fabtnBoardAdd);
         floatingActionButton.setOnClickListener(this);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
     }
@@ -68,6 +73,13 @@ public class BoardListFragment extends Fragment implements View.OnClickListener 
                     break;
 
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mAdapter.notifyDataSetChanged();
+        // 새로고침 완료 빙글빙글 도는거 없앰
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

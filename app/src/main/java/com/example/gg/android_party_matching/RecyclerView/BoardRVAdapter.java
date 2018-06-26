@@ -57,7 +57,7 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
             @Override
             public void onResponse(Call<List<PartyVO>> call, Response<List<PartyVO>> response) {
                 party_list = response.body();
-                for(PartyVO partyVO: party_list){
+                    for(PartyVO partyVO: party_list){
 
                 }
 //                if(response.isSuccessful()){
@@ -95,12 +95,12 @@ public class BoardRVAdapter extends RecyclerView.Adapter<BoardRVAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PartyVO partyVO = party_list.get(position);
-        holder.txtRegisterDate.setText(holder.txtRegisterDate.getText() + partyVO.getMake_date());
+        holder.txtRegisterDate.setText("등록일자: "+partyVO.getMake_date());
         holder.txtTitle.setText(partyVO.getTitle());
         String max = Integer.toString(partyVO.getMax_people());
         String now = Integer.toString(partyVO.getJoin_people());
-        holder.txtParticipantCount.setText(holder.txtParticipantCount.getText() + now + "/" + max);
-        holder.txtRegistrant.setText(holder.txtRegistrant.getText() + partyVO.getMaster_name());
+        holder.txtParticipantCount.setText("참가자 " + now + "/" + max);
+        holder.txtRegistrant.setText("작성자: " + partyVO.getMaster_name());
     }
 
     @Override
